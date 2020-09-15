@@ -1,0 +1,15 @@
+<div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+<div class="alert alert-success" *ngIf="message">{{ message }}</div>
+<div class="col-md-4 offset-md-4 mt-3">
+  <h4>Please Login!!!</h4>
+  <form #loginForm='ngForm' (ngSubmit)="onSubmitForm(loginForm)">
+    <input type="email" name="email" id="email" #email="ngModel" ngModel
+    email required minlength="6" class="form-control mb-3" placeholder="Enter Email ID">
+    <input type="password" name="password" id="password" #password="ngModel"
+    ngModel required minlength="8" class="form-control mb-3" placeholder="Enter Password">
+    <a routerLink="/authentication/register">Don't have an account? Please Register!!</a>
+    <button class="btn btn-primary float-right">
+      Login
+    </button>
+  </form>
+</div>

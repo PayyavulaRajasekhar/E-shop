@@ -1,0 +1,36 @@
+<div class="container mt-3">
+  <div class="alert alert-success" *ngIf="message">
+    <span>{{ message }}</span>
+    <span class="float-right">
+      <strong>Order ID: &nbsp;</strong>
+      {{ orderDetails?._id }}
+    </span>
+  </div>
+  <h2 class="text-secondary">Order Details</h2>
+  <div class="table-responsive">
+    <table class="table-bordered table-hover table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Index</th>
+          <th>Product Name</th>
+          <th>Product Image</th>
+          <th>Product Price</th>
+          <th>Product Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of orderDetails?.cart; index as i;">
+          <td>{{ i+1 }}</td>
+          <td>{{ product.productName }}</td>
+          <td>
+            <img [src]="product.productImageURL" [alt]="product.productName" height="150px">
+          </td>
+          <td>{{ product.productPrice | currency : 'INR' }}</td>
+          <td>{{ product.productQuantity }}</td>
+          <td>{{ product.productQuantity * product.productPrice | currency : 'INR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

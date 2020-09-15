@@ -1,0 +1,66 @@
+<div *ngIf="isLoading" class="text-center mt-5">
+  <app-spinner></app-spinner>
+</div>
+<div *ngIf="!isLoading">
+  <div class="alert alert-success" *ngIf="message">{{ message }}</div>
+  <h2 class="text-center text-info mt-5" *ngIf="productService.products && productService.products.length === 0">
+    No Products Available
+  </h2>
+
+  <div class="container">
+    <div class="col-md-4 offset-md-4 mt-3">
+      <div class="input-group">
+        <input type="search" name="search" [(ngModel)]="search" class="form-control"
+          placeholder="Enter the product name to search...">
+        <div class="input-group-append">
+          <button class="btn btn-dark" (click)="searchProducts()">search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-3" *ngIf="productService.products && productService.products.length !== 0">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Index</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Product Description</th>
+            <th>Product Image</th>
+            <th *ngIf="authService.isUser()">Buy</th>
+            <th *ngIf="authService.isAdmin()">Update</th>
+            <th *ngIf="authService.isAdmin()">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of productService.products; index as i;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.productPrice | currency : 'INR'}}</td>
+            <td>{{ product.productDescription }}</td>
+            <td>
+              <img [src]="product.productImageURL" [alt]="product.productName" width="300px" height="150px">
+            </td>
+            <td *ngIf="authService.isUser()">
+              <button class="btn btn-primary" (click)="onAddToCart(product)">
+                Add
+              </button>
+            </td>
+            <td *ngIf="authService.isAdmin()">
+              <button class="btn btn-success" (click)="onEdit(product)">
+                Edit
+              </button>
+            </td>
+            <td *ngIf="authService.isAdmin()">
+              <button class="btn btn-primary" (click)="onDelete(product._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container mt-3">
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+    *ngFor="let order of orders">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <strong>Order ID: &nbsp;</strong> {{ order._id }}
+        </mat-panel-title>
+        <mat-panel-description>
+
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <h6 class="text-right">{{ order.status }}</h6>
+      <table class="table-bordered table-hover table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Index</th>
+            <th>Product Name</th>
+            <th>Product Image</th>
+            <th>Product Price</th>
+            <th>Product Quantity</th>
+            <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of order.cart; index as i;">
+            <td>{{ i+1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td>
+              <img [src]="product.productImageURL"
+              [alt]="product.productName" height="150px">
+            </td>
+            <td>{{ product.productPrice | currency : 'INR' }}</td>
+            <td>{{ product.productQuantity }}</td>
+            <td>{{ product.productQuantity * product.productPrice | currency : 'INR' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-group">
+        <button class="btn btn-outline-primary float-right" (click)="onViewMore(order)">
+          View More
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
